@@ -13,79 +13,67 @@ from gi.repository import Gtk
 
 #check if running in root
 if os.geteuid() != 0:
-    exit("please run as sudo")
+	exit("please run as sudo")
 
 #make class MyWindow and etc
 class MyWindow(Gtk.Window):
-    def __init__(self):
-        super(MyWindow, self).__init__()
-        self.init_ui()
-    def init_ui(self):
+	def __init__(self):
+		super(MyWindow, self).__init__()
+		self.init_ui()
+	def init_ui(self):
         
         #set window title
-        self.set_title("umt")
-        self.connect("destroy", Gtk.main_quit)
+		self.set_title("umt")
+		self.connect("destroy", Gtk.main_quit)
 
-        #add grid
-        grid = Gtk.Grid()
-        self.add(grid)
+        #add hbox
+		hbox = Gtk.Box(spacing=6)
+		self.add(hbox)
 
         #buttons
-        Btn = Gtk.Button(label="update repos")
-        Btn.set_size_request(30, 0)
-        Btn.connect("clicked", self.on_button_clicked)
+		button = Gtk.Button(label="update repos")
+		button.connect("clicked", self.on_button_clicked)
+		hbox.pack_start(button, True, True, 0)
 
-        Btn2 = Gtk.Button(label="update system")
-        Btn2.set_size_request(30, 0)
-        Btn2.connect("clicked", self.on_button2_clicked)
+		button2 = Gtk.Button(label="update system")
+		button2.connect("clicked", self.on_button2_clicked)
+		hbox.pack_start(button2, True, True, 0)
 
-        Btn3 = Gtk.Button(label="clean APT")
-        Btn3.set_size_request(30, 0)
-        Btn3.connect("clicked", self.on_button3_clicked)
-        
-        Btn4 = Gtk.Button(label="update snaps")
-        Btn4.set_size_request(30, 0)
-        Btn4.connect("clicked", self.on_button4_clicked)
+		button3 = Gtk.Button(label="clean APT")
+		button3.connect("clicked", self.on_button3_clicked)
+		hbox.pack_start(button3, True, True, 0)
+       
+		button4 = Gtk.Button(label="update snaps")
+		button4.connect("clicked", self.on_button4_clicked)
+		hbox.pack_start(button4, True, True, 0)
 
-        Btn5 = Gtk.Button(label="clean snap")
-        Btn5.set_size_request(30, 0)
-        Btn5.connect("clicked", self.on_button5_clicked)
+		button5 = Gtk.Button(label="clean snap")
+		button5.connect("clicked", self.on_button5_clicked)
+		hbox.pack_start(button5, True, True, 0)
 
-        Btn6 = Gtk.Button(label="clean flatpak")
-        Btn6.set_size_request(30, 0)
-        Btn6.connect("clicked", self.on_button5_clicked)
+		button6 = Gtk.Button(label="clean flatpak")
+		button6.connect("clicked", self.on_button6_clicked)
+		hbox.pack_start(button6, True, True, 0)
 
-        #add buttons to grid
-        grid.attach(Btn, 0, 10, 1, 1)
-        
-        grid.attach(Btn2, 0, 20, 1, 1)
-        
-        grid.attach(Btn3, 10, 10, 1, 1)
-        
-        grid.attach(Btn4, 10, 20, 1, 1)
-        
-        grid.attach(Btn5, 20, 10, 1, 1)
-        
-        grid.attach(Btn6, 20, 20, 1, 1)
 
     #commands
-    def on_button_clicked(self, widget):
-        os.system("apt update -y &")
+	def on_button_clicked(self, button):
+		os.system("apt update -y &")
 
-    def on_button2_clicked(self, widget):
-        os.system("apt upgrade -y && apt dist-upgrade -y &")
+	def on_button2_clicked(self, button):
+		os.system("apt upgrade -y && apt dist-upgrade -y &")
 
-    def on_button3_clicked(self, widget):
-        os.system("apt autoclean && apt autoremove -y &")
+	def on_button3_clicked(self, button):
+		os.system("apt autoclean && apt autoremove -y &")
 
-    def on_button4_clicked(self, widget):
-        os.system("snap refresh &")
+	def on_button4_clicked(self, button):
+		os.system("snap refresh &")
 
-    def on_button5_clicked(self, widget):
-        os.system("rm /var/lib/snapd/cache/* &")
+	def on_button5_clicked(self, button):
+		os.system("rm /var/lib/snapd/cache/* &")
 
-    def on_button6_clicked(self, widget):
-        os.system("flatpak uninstall --unused &")
+	def on_button6_clicked(self, button):
+		os.system("flatpak uninstall --unused &")
 
 #spawn window
 win = MyWindow()
